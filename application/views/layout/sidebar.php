@@ -18,7 +18,7 @@
             <a href="<?= base_url('dashboard') ?>" class="nav-item nav-link <?= ($title === "Dashboard") ? 'active' : '' ?>"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
             <a href="<?= base_url('pegawai') ?>" class="nav-item nav-link <?= ($title === "Pegawai") ? 'active' : '' ?>"><i class="far fa-file-alt me-2"></i>Pegawai</a>
             <a href="<?= base_url('tiket') ?>" class="nav-item nav-link <?= ($title === "Tiket") ? 'active' : '' ?>"><i class="fa fa-th me-2"></i>Tiket</a>
-            <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Log out</a>
+            <a href="<?= base_url() ?>" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Log out</a>
         </div>
     </nav>
 </div>
