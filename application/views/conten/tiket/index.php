@@ -22,7 +22,7 @@
   /* Modal Content/Box */
   .modal-content {
     background-color: #fefefe;
-    margin: 11% auto;
+    margin: 10% auto;
     /* 15% from the top and centered */
     padding: 20px;
     border-radius: 1.3rem !important;
@@ -33,7 +33,7 @@
 
   .modal-contentss {
     background-color: #fefefe;
-    margin: 5% auto;
+    margin: 3% auto;
     /* 15% from the top and centered */
     padding: 20px;
     border-radius: 1.3rem !important;
@@ -61,7 +61,6 @@
 
 <div class="col-12">
   <div class="bg-light rounded h-100 p-4">
-    <h6 class="mb-4">Tabel Tiket</h6>
     <?php if ($this->session->flashdata('pesan')) {
       echo '<div class="alert alert-success" role="alert">
                     Success ! ';
@@ -75,12 +74,12 @@
       <table id="tiket" class="table">
         <thead>
           <tr>
-            <th scope="col">No</th>
-            <th scope="col">Nama Lengkap</th>
-            <th scope="col">Jenis Kelamin</th>
-            <th scope="col">Divisi</th>
-            <th scope="col">Status</th>
-            <th scope="col">Action</th>
+            <td>No</td>
+            <td>Deskripsi</td>
+            <td>PIC</td>
+            <td>Request</td>
+            <td>Status</td>
+            <td>Action</td>
           </tr>
         </thead>
         <tbody>
@@ -89,37 +88,38 @@
           foreach ($tiket as $value) {
           ?>
             <tr>
-              <th scope="row"><?= $no++; ?></th>
+              <td><?= $no++; ?></td>
               <td>
-                <button namal="<?= $value->namal; ?>" namap="<?= $value->namap; ?>" jk="<?= $value->jk; ?>" divisi="<?= $value->divisi; ?>" alamat="<?= $value->alamat; ?>" nohp="<?= $value->nohp; ?>" status="<?= $value->status; ?>" type="button" class="btn btn-sm btn-primary rounded-pill m-2 detail">
-                  <?= $value->namal; ?>
+                <button id="<?= $value->id; ?>" desk="<?= $value->desk; ?>" pic="<?= $value->pic; ?>" request="<?= $value->request; ?>" pelapor="<?= $value->pelapor; ?>" team="<?= $value->team; ?>" priority="<?= $value->priority; ?>" status="<?= $value->status; ?>" divisi="<?= $value->divisi; ?>" tgl="<?= $value->tgl; ?>" bulan="<?= $value->bulan; ?>" tahun="<?= $value->tahun; ?>" type="button" class="btn btn-sm btn-primary rounded-pill m-2 detail">
+                  <?= $value->desk; ?>
                 </button>
               </td>
               <td>
-                <?php if ($value->jk == 1) { ?>
-                  Laki- Laki
-                <?php } else if ($value->jk == 0) { ?>
-                  Perempuan
-                <?php } ?>
+                <?php foreach ($pegawai as $p) {
+                  if ($value->pic == $p->id) { ?>
+                    <?= $p->namal; ?>
+                <?php }
+                } ?>
               </td>
               <td>
-                <?php if ($value->divisi == 1) { ?>
-                  Div. Jaringan
-                <?php } else if ($value->divisi == 2) { ?>
-                  Div. Programmer
-                <?php } else if ($value->divisi == 3) { ?>
-                  Div. Website
-                <?php } ?>
+                <?= $value->request; ?>
               </td>
               <td>
                 <?php if ($value->status == 1) { ?>
-                  <a type="button" href="<?= base_url('tiket/nonaktif/') . $value->id ?>" class="btn btn-sm btn-primary rounded-pill m-2">Active</a>
-                <?php } else if ($value->status == 0) { ?>
-                  <a type="button" href="<?= base_url('tiket/aktif/') . $value->id ?>" class="btn btn-sm btn-danger rounded-pill m-2">Non Aktive</a>
+                  On Progres
+                <?php } else if ($value->status == 2) { ?>
+                  Closed
+                <?php } else if ($value->status == 3) { ?>
+                  Pending
                 <?php } ?>
               </td>
               <td>
-                <button type="button" id="<?= $value->id; ?>" namal="<?= $value->namal; ?>" namap="<?= $value->namap; ?>" jk="<?= $value->jk; ?>" divisi="<?= $value->divisi; ?>" alamat="<?= $value->alamat; ?>" nohp="<?= $value->nohp; ?>" class="btn btn-sm btn-success rounded-pill m-2 editdata">Edit</button>
+                <?php if ($value->status == 2) { ?>
+                  ✅
+                <?php } else { ?>
+                  <button id="<?= $value->id; ?>" desk="<?= $value->desk; ?>" pic="<?= $value->pic; ?>" request="<?= $value->request; ?>" pelapor="<?= $value->pelapor; ?>" team="<?= $value->team; ?>" priority="<?= $value->priority; ?>" status="<?= $value->status; ?>" divisi="<?= $value->divisi; ?>" type="button" class="btn btn-sm btn-success rounded-pill m-2 editdata"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+                  <a href="<?= base_url('tiket/delete/') . $value->id ?>" type="button" class="btn btn-sm btn-danger rounded-pill m-2">Hapus</a>
+                <?php } ?>
               </td>
             </tr>
           <?php } ?>
@@ -140,52 +140,66 @@
       <hr>
       <div class="row">
         <div class="col-md-2">
-          Nama Lengkap =>
+          Deskripsi =>
         </div>
-        <div class="col-md-4">            
-          <h5 id="dnamal"></h5>
-        </div>
-        <div class="col-md-2 ">
-          Nama Panggilan =>
-        </div>
-        <div class="col-md-4">      
-          <h5 id="dnamap"></h5>
-        </div>
+        <div class="col-md-10">
+          <h5 id="ddesk"></h5>
+        </div>        
       </div>
       <div class="row">
         <div class="col-md-2">
-          Alamat =>
+          PIC =>
         </div>
-        <div class="col-md-4">            
-          <h5 id="dalamat"></h5>
+        <div class="col-md-4">
+          <h5 id="dpic"></h5>
         </div>
         <div class="col-md-2 ">
-          Nomor HP =>
+          Request =>
         </div>
-        <div class="col-md-4">      
-          <h5 id="dnohp"></h5>
+        <div class="col-md-4">
+          <h5 id="drequest"></h5>
         </div>
       </div>
-      <div class="row">
+      <div class="row">        
+        <div class="col-md-2 ">
+          Pelapor =>
+        </div>
+        <div class="col-md-4">
+          <h5 id="dpelapor"></h5>
+        </div>
         <div class="col-md-2">
-          Jenis Kelamin =>
+          Team =>
         </div>
-        <div class="col-md-4">            
-          <h5 id="djk"></h5>
-        </div>
-        <div class="col-md-2 ">
-          Divisi =>
-        </div>
-        <div class="col-md-4">      
-          <h5 id="ddivisi"></h5>
+        <div class="col-md-4">
+          <h5 id="dteam"></h5>
         </div>
       </div>
-      <div class="row">
+      <div class="row">        
+        <div class="col-md-2 ">
+          Priority =>
+        </div>
+        <div class="col-md-4">
+          <h5 id="dpriority"></h5>
+        </div>
         <div class="col-md-2">
           Status =>
         </div>
-        <div class="col-md-4">            
+        <div class="col-md-4">
           <h5 id="dstatus"></h5>
+        </div>
+      </div>
+      <div class="row">        
+        <div class="col-md-2 ">
+          Divisi =>
+        </div>
+        <div class="col-md-4">
+          <h5 id="ddivisi"></h5>
+        </div>
+        <div class="col-md-2">
+          Tanggal =>
+        </div>
+        <div class="col-md-4">
+          <h5 id="dtgl"></h5>
         </div>
       </div>
     </div>
@@ -207,40 +221,65 @@
       <form action="<?= base_url('tiket') ?>/update" method="POST">
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="namal" class="form-label">Nama Lengkap</label>
-            <input type="text" class="form-control" id="ednamal" name="namal" aria-describedby="NamaLengkap">
+            <label for="desk" class="form-label">Deskripsi</label>
+            <input type="text" class="form-control" id="eddesk" name="desk" aria-describedby="Deskripsi" require>
             <input type="text" class="form-control" id="edid" name="id" hidden>
           </div>
           <div class="col-md-6">
-            <label for="namap" class="form-label">Nama Panggilan</label>
-            <input type="text" class="form-control" id="ednamap" name="namap" aria-describedby="NamaPanggilan">
+            <label for="pic" class="form-label">Penanggungjawab (PIC)</label>
+            <select class="form-select" id="edpic" name="pic" aria-label="Default select example">
+              <option selected>Open this select menu PIC</option>
+              <?php foreach ($pegawai as $p) { ?>
+                <option value="<?= $p->id; ?>"><?= $p->namal; ?></option>
+              <?php } ?>
+            </select>
           </div>
         </div>
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="jk" class="form-label">Jenis Kelamin</label>
-            <select class="form-select" id="edjk" name="jk" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="1">Laki - Laki</option>
-              <option value="0">Perempuan</option>
+            <label for="request" class="form-label">Request</label>
+            <input type="text" class="form-control" id="edrequest" name="request" aria-describedby="Request" require>
+          </div>
+          <div class="col-md-6">
+            <label for="pelapor" class="form-label">Pelapor</label>
+            <input type="text" class="form-control" id="edpelapor" name="pelapor" aria-describedby="Pelapor" require>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="team" class="form-label">Team</label>
+            <select class="form-select" id="edteam" name="team" aria-label="Default select example">
+              <option selected>Open this select menu Team</option>
+              <?php foreach ($pegawai as $p) { ?>
+                <option value="<?= $p->id; ?>"><?= $p->namal; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="priority" class="form-label">Priority</label>
+            <select class="form-select" id="edpriority" name="priority" aria-label="Default select example">
+              <option selected>Open this select menu Priority</option>
+              <option value="1">High</option>
+              <option value="0">Low</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="edstatus" name="status" aria-label="Default select example">
+              <option selected>Open this select menu Status</option>
+              <option value="1">On Progres</option>
+              <option value="2">Closed</option>
+              <option value="3">Pending</option>
             </select>
           </div>
           <div class="col-md-6">
             <label for="divisi" class="form-label">Divisi</label>
             <select class="form-select" id="eddivisi" name="divisi" aria-label="Default select example">
-              <option selected>Open this select menu</option>
+              <option selected>Open this select menu divisi Divisi</option>
               <option value="1">Divisi Jaringan</option>
             </select>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="alamat" class="form-label">Alamat</label>
-            <input type="text" class="form-control" id="edalamat" name="alamat" aria-describedby="Alamat">
-          </div>
-          <div class="col-md-6">
-            <label for="nohp" class="form-label">Nomor Hp</label>
-            <input type="text" class="form-control" id="ednohp" name="nohp" aria-describedby="noHp">
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Update Data</button>
@@ -264,39 +303,64 @@
       <form action="<?= base_url('tiket') ?>/adddata" method="POST">
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="namal" class="form-label">Nama Lengkap</label>
-            <input type="text" class="form-control" id="namal" name="namal" aria-describedby="NamaLengkap" require>
+            <label for="desk" class="form-label">Deskripsi</label>
+            <input type="text" class="form-control" id="desk" name="desk" aria-describedby="Deskripsi" require>
           </div>
           <div class="col-md-6">
-            <label for="namap" class="form-label">Nama Panggilan</label>
-            <input type="text" class="form-control" id="namap" name="namap" aria-describedby="NamaPanggilan" require>
+            <label for="pic" class="form-label">Penanggungjawab (PIC)</label>
+            <select class="form-select" id="pic" name="pic" aria-label="Default select example">
+              <option selected>Open this select menu PIC</option>
+              <?php foreach ($pegawai as $p) { ?>
+                <option value="<?= $p->id; ?>"><?= $p->namal; ?></option>
+              <?php } ?>
+            </select>
           </div>
         </div>
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="jk" class="form-label">Jenis Kelamin</label>
-            <select class="form-select" id="jk" name="jk" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="1">Laki - Laki</option>
-              <option value="2">Perempuan</option>
+            <label for="request" class="form-label">Request</label>
+            <input type="text" class="form-control" id="request" name="request" aria-describedby="Request" require>
+          </div>
+          <div class="col-md-6">
+            <label for="pelapor" class="form-label">Pelapor</label>
+            <input type="text" class="form-control" id="pelapor" name="pelapor" aria-describedby="Pelapor" require>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="team" class="form-label">Team</label>
+            <select class="form-select" id="team" name="team" aria-label="Default select example">
+              <option selected>Open this select menu Team</option>
+              <?php foreach ($pegawai as $p) { ?>
+                <option value="<?= $p->id; ?>"><?= $p->namal; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="priority" class="form-label">Priority</label>
+            <select class="form-select" id="priority" name="priority" aria-label="Default select example">
+              <option selected>Open this select menu Priority</option>
+              <option value="1">High</option>
+              <option value="0">Low</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" name="status" aria-label="Default select example">
+              <option selected>Open this select menu Status</option>
+              <option value="1">On Progres</option>
+              <option value="2">Closed</option>
+              <option value="3">Pending</option>
             </select>
           </div>
           <div class="col-md-6">
             <label for="divisi" class="form-label">Divisi</label>
             <select class="form-select" id="divisi" name="divisi" aria-label="Default select example">
-              <option selected>Open this select menu</option>
+              <option selected>Open this select menu divisi Divisi</option>
               <option value="1">Divisi Jaringan</option>
             </select>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="alamat" class="form-label">Alamat</label>
-            <input type="text" class="form-control" id="alamat" name="alamat" aria-describedby="Alamat" require>
-          </div>
-          <div class="col-md-6">
-            <label for="nohp" class="form-label">Nomor Hp</label>
-            <input type="text" class="form-control" id="nohp" name="nohp" aria-describedby="noHp" require>
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Add Data</button>
@@ -317,32 +381,50 @@
   var modaldetail = document.getElementById("modaldetail");
   $('.detail').click(function() {
     modaldetail.style.display = "block";
-    var namal = $(this).attr('namal');
-    $('#dnamal').text(namal);
-    var namap = $(this).attr('namap');
-    $('#dnamap').text(namap);
-    var alamat = $(this).attr('alamat');
-    $('#dalamat').text(alamat);
-    var nohp = $(this).attr('nohp');
-    $('#dnohp').text(nohp);
+    var id = $(this).attr('id');
+    var desk = $(this).attr('desk');
+    $('#ddesk').text(desk);
+    var pic = $(this).attr('pic');    
+    <?php foreach ($pegawai as $peg) { ?>
+      if (pic == <?= $peg->id; ?>) {     
+        $('#dpic').text('<?= $peg->namal; ?>');
+      }
+    <?php } ?>
+    var request = $(this).attr('request');
+    $('#drequest').text(request);
+    var pelapor = $(this).attr('pelapor');
+    $('#dpelapor').text(pelapor);
+    var team = $(this).attr('team');
+    <?php foreach ($pegawai as $peg) { ?>
+      if (team == <?= $peg->id; ?>) {     
+        $('#dteam').text('<?= $peg->namal; ?>');
+      }
+    <?php } ?>
+    // $('#dteam').text(team);
+    var priority = $(this).attr('priority');    
+    if (priority == 1) {
+      $('#dpriority').text('High');
+    } else if (priority == 0) {
+      $('#dpriority').text('Low');
+    } 
+    var status = $(this).attr('status');
+    if (status == 1) {
+      $('#dstatus').text('On Progres');
+    } else if (status == 2) {
+      $('#dstatus').text('Selesai');    
+    } else if (status == 3) {
+      $('#dstatus').text('Pending');
+    }
     var divisi = $(this).attr('divisi');
     if (divisi == 1) {
       $('#ddivisi').text('Divisi Jaringan');
-    } else if (divisi == 2){
-      $('#ddivisi').text('Divisi Programmer');      
-    }    
-    var jk = $(this).attr('jk');
-    if (jk == 1) {
-      $('#djk').text('Laki-Laki');
-    } else if (jk == 0){
-      $('#djk').text('Perempuan');
+    } else if (divisi == 2) {
+      $('#ddivisi').text('Divisi Programmer');
     }
-    var status = $(this).attr('status');
-    if (status == 1) {
-      $('#dstatus').text('Aktif');
-    } else if (status == 0){
-      $('#dstatus').text('Tidak Aktif');
-    }
+    var tgl = $(this).attr('tgl');
+    var bulan = $(this).attr('bulan');
+    var tahun = $(this).attr('tahun');
+    $('#dtgl').text(tgl + '/' + bulan + '/' + tahun);    
   });
   // End Modal Detail
 
@@ -359,20 +441,24 @@
     modaledit.style.display = "block";
     var id = $(this).attr('id');
     $('#edid').val(id);
-    var namal = $(this).attr('namal');
-    $('#ednamal').val(namal);
-    var namap = $(this).attr('namap');
-    $('#ednamap').val(namap);
-    var alamat = $(this).attr('alamat');
-    $('#edalamat').val(alamat);
-    var nohp = $(this).attr('nohp');
-    $('#ednohp').val(nohp);
+    var desk = $(this).attr('desk');
+    $('#eddesk').val(desk);
+    var pic = $(this).attr('pic');
+    $('#edpic').val(pic);
+    var request = $(this).attr('request');
+    $('#edrequest').val(request);
+    var pelapor = $(this).attr('pelapor');
+    $('#edpelapor').val(pelapor);
+    var team = $(this).attr('team');
+    $('#edteam').val(team);
+    var priority = $(this).attr('priority');
+    $('#edpriority').val(priority);
+    var status = $(this).attr('status');
+    $('#edstatus').val(status);
     var divisi = $(this).attr('divisi');
     $('#eddivisi').val(divisi);
-    var jk = $(this).attr('jk');
-    $('#edjk').val(jk);
   });
-  // End Modal Add
+  // End Modal Edit
 
   $('.keluar').click(function() {
     modaldetail.style.display = "none";

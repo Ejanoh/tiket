@@ -60,8 +60,7 @@
 <h3>Halaman <?= $title; ?></h3>
 
 <div class="col-12">
-  <div class="bg-light rounded h-100 p-4">
-    <h6 class="mb-4">Tabel Pegawai</h6>
+  <div class="bg-light rounded h-100 p-4">    
     <?php if ($this->session->flashdata('pesan')) {
       echo '<div class="alert alert-success" role="alert">
                     Success ! ';
