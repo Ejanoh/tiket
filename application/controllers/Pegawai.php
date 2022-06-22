@@ -1,10 +1,13 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pegawai extends CI_Controller {
+class Pegawai extends CI_Controller
+{
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
+		is_logged_in();
 		$this->load->model('M_pegawai');
 	}
 
@@ -31,7 +34,7 @@ class Pegawai extends CI_Controller {
 			'nohp' => $this->input->post('nohp'),
 			'alamat' => $this->input->post('alamat')
 		];
-		$result = $this->M_pegawai->adddata($data); 
+		$result = $this->M_pegawai->adddata($data);
 		if ($result > 0) {
 			// echo "Berhasillllllll";
 			$this->session->set_flashdata('pesan', 'Berhasil Menambahkan Data Pegawai..');
@@ -54,7 +57,7 @@ class Pegawai extends CI_Controller {
 			'nohp' => $this->input->post('nohp'),
 			'alamat' => $this->input->post('alamat')
 		];
-		$result = $this->M_pegawai->update($data); 
+		$result = $this->M_pegawai->update($data);
 		if ($result > 0) {
 			$this->session->set_flashdata('pesan', 'Berhasil Mengubah Data Pegawai..');
 			redirect('Pegawai');

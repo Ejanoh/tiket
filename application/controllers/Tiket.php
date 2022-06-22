@@ -1,10 +1,13 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Tiket extends CI_Controller {
+class Tiket extends CI_Controller
+{
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
+		is_logged_in();
 		$this->load->model('M_tiket');
 		$this->load->model('M_pegawai');
 	}
@@ -39,10 +42,10 @@ class Tiket extends CI_Controller {
 			'priority' => $this->input->post('priority'),
 			'status' => $this->input->post('status'),
 			'divisi' => $this->input->post('divisi'),
-			'bulan'=> $bln,
-			'tahun'=> $thn
+			'bulan' => $bln,
+			'tahun' => $thn
 		];
-		$result = $this->M_tiket->adddata($data); 
+		$result = $this->M_tiket->adddata($data);
 		if ($result > 0) {
 			// echo "Berhasillllllll";
 			$this->session->set_flashdata('pesan', 'Berhasil Menambahkan Data tiket..');
@@ -67,7 +70,7 @@ class Tiket extends CI_Controller {
 			'status' => $this->input->post('status'),
 			'divisi' => $this->input->post('divisi')
 		];
-		$result = $this->M_tiket->update($data); 
+		$result = $this->M_tiket->update($data);
 		if ($result > 0) {
 			$this->session->set_flashdata('pesan', 'Berhasil Mengubah Data tiket..');
 			redirect('tiket');
@@ -79,7 +82,7 @@ class Tiket extends CI_Controller {
 
 	public function delete($id)
 	{
-		$result = $this->M_tiket->delete($id); 
+		$result = $this->M_tiket->delete($id);
 		if ($result > 0) {
 			$this->session->set_flashdata('pesan', 'Berhasil Menghapus Data tiket..');
 			redirect('tiket');
