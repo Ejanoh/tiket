@@ -71,7 +71,7 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <input type="checkbox" class="form-check-input" id="edpass">
                                     <label class="form-check-label" for="exampleCheck1">Lihat Katasandi</label>
                                 </div>
                             </div>
@@ -103,6 +103,16 @@
                 $(this).remove();
             });
         }, 3000);
+
+        $(document).ready(function() {
+            $('.form-check-input').click(function() {
+                if ($(this).is(':checked')) {
+                    $('#password').attr('type', 'text');
+                } else {
+                    $('#password').attr('type', 'password');
+                }
+            });
+        });
     </script>
 </body>
 

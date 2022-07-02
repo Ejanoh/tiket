@@ -67,9 +67,29 @@
       echo $this->session->flashdata('pesan');
       echo '</div>';
     } ?>
-    <div class="text-align-right">
-      <button type="button" class="btn btn-primary rounded-pill m-2" id="add"><i class="fa fa-user-plus me-2"></i>Tambah Data</button>
+    <div class="bg-light rounded  p-2" id="divhide">
+      <select class="form-select form-select-lg" id="bulan" aria-label=".form-select-lg example">
+        <option value="0">Open this select Moon</option>
+        <option value="1" <?= ($bulan === "01") ? $selected = 'selected' : '' ?>>Data Tiket Januari</option>
+        <option value="2" <?= ($bulan === "02") ? $selected = 'selected' : '' ?>>Data Tiket Februari</option>
+        <option value="3" <?= ($bulan === "03") ? $selected = 'selected' : '' ?>>Data Tiket Maret</option>
+        <option value="4" <?= ($bulan === "04") ? $selected = 'selected' : '' ?>>Data Tiket April</option>
+        <option value="5" <?= ($bulan === "05") ? $selected = 'selected' : '' ?>>Data Tiket Mei</option>
+        <option value="6" <?= ($bulan === "06") ? $selected = 'selected' : '' ?>>Data Tiket Juni</option>
+        <option value="7" <?= ($bulan === "07") ? $selected = 'selected' : '' ?>>Data Tiket Juli</option>
+        <option value="8" <?= ($bulan === "08") ? $selected = 'selected' : '' ?>>Data Tiket Agustus</option>
+        <option value="9" <?= ($bulan === "09") ? $selected = 'selected' : '' ?>>Data Tiket September</option>
+        <option value="10 <?= ($bulan === "10") ? $selected = 'selected' : '' ?>" Data Tiket>Oktober</option>
+        <option value="11 <?= ($bulan === "11") ? $selected = 'selected' : '' ?>" Data Tiket>November</option>
+        <option value="12 <?= ($bulan === "12") ? $selected = 'selected' : '' ?>" Data Tiket>Desember</option>
+      </select>
     </div>
+    <?php if (($this->session->userdata('role') == 2) || ($this->session->userdata('role') == 4)) { ?>
+      <div class="text-align-right">
+        <button type="button" class="btn btn-primary rounded-pill m-2" id="add"><i class="fa fa-user-plus me-2"></i>Tambah Data</button>
+      </div>
+    <?php } else {
+    } ?>
     <div class="table-responsive">
       <table id="tiket" class="table">
         <thead>
@@ -79,7 +99,10 @@
             <td>PIC</td>
             <td>Request</td>
             <td>Status</td>
-            <td>Action</td>
+            <?php if (($this->session->userdata('role') == 2) || ($this->session->userdata('role') == 4)) { ?>
+              <td>Action</td>
+            <?php } else {
+            } ?>
           </tr>
         </thead>
         <tbody>
@@ -113,14 +136,17 @@
                   Pending
                 <?php } ?>
               </td>
-              <td>
-                <?php if ($value->status == 2) { ?>
-                  ✅
-                <?php } else { ?>
-                  <button id="<?= $value->id; ?>" desk="<?= $value->desk; ?>" pic="<?= $value->pic; ?>" request="<?= $value->request; ?>" pelapor="<?= $value->pelapor; ?>" team="<?= $value->team; ?>" priority="<?= $value->priority; ?>" status="<?= $value->status; ?>" divisi="<?= $value->divisi; ?>" type="button" class="btn btn-sm btn-success rounded-pill m-2 editdata"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
-                  <a href="<?= base_url('tiket/delete/') . $value->id ?>" type="button" class="btn btn-sm btn-danger rounded-pill m-2">Hapus</a>
-                <?php } ?>
-              </td>
+              <?php if (($this->session->userdata('role') == 2) || ($this->session->userdata('role') == 4)) { ?>
+                <td>
+                  <?php if ($value->status == 2) { ?>
+                    ✅
+                  <?php } else { ?>
+                    <button id="<?= $value->id; ?>" desk="<?= $value->desk; ?>" pic="<?= $value->pic; ?>" request="<?= $value->request; ?>" pelapor="<?= $value->pelapor; ?>" team="<?= $value->team; ?>" priority="<?= $value->priority; ?>" status="<?= $value->status; ?>" divisi="<?= $value->divisi; ?>" type="button" class="btn btn-sm btn-success rounded-pill m-2 editdata"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+                    <a href="<?= base_url('tiket/delete/') . $value->id ?>" type="button" class="btn btn-sm btn-danger rounded-pill m-2">Hapus</a>
+                  <?php } ?>
+                </td>
+              <?php } else {
+              } ?>
             </tr>
           <?php } ?>
         </tbody>
@@ -144,7 +170,7 @@
         </div>
         <div class="col-md-10">
           <h5 id="ddesk"></h5>
-        </div>        
+        </div>
       </div>
       <div class="row">
         <div class="col-md-2">
@@ -160,7 +186,7 @@
           <h5 id="drequest"></h5>
         </div>
       </div>
-      <div class="row">        
+      <div class="row">
         <div class="col-md-2 ">
           Pelapor =>
         </div>
@@ -174,7 +200,7 @@
           <h5 id="dteam"></h5>
         </div>
       </div>
-      <div class="row">        
+      <div class="row">
         <div class="col-md-2 ">
           Priority =>
         </div>
@@ -188,7 +214,7 @@
           <h5 id="dstatus"></h5>
         </div>
       </div>
-      <div class="row">        
+      <div class="row">
         <div class="col-md-2 ">
           Divisi =>
         </div>
@@ -377,6 +403,16 @@
     $('#tiket').DataTable();
   });
 
+  // Select
+  $('#bulan').change(function() {
+    let bulan = $('#bulan').val();
+    if (bulan == 0) {
+      location.reload();
+    } else {
+      window.location.href = '<?= base_url('tiket/bulan/') ?>' + bulan;
+    }
+  });
+
   // Modal Detail
   var modaldetail = document.getElementById("modaldetail");
   $('.detail').click(function() {
@@ -384,9 +420,9 @@
     var id = $(this).attr('id');
     var desk = $(this).attr('desk');
     $('#ddesk').text(desk);
-    var pic = $(this).attr('pic');    
+    var pic = $(this).attr('pic');
     <?php foreach ($pegawai as $peg) { ?>
-      if (pic == <?= $peg->id; ?>) {     
+      if (pic == <?= $peg->id; ?>) {
         $('#dpic').text('<?= $peg->namal; ?>');
       }
     <?php } ?>
@@ -396,22 +432,22 @@
     $('#dpelapor').text(pelapor);
     var team = $(this).attr('team');
     <?php foreach ($pegawai as $peg) { ?>
-      if (team == <?= $peg->id; ?>) {     
+      if (team == <?= $peg->id; ?>) {
         $('#dteam').text('<?= $peg->namal; ?>');
       }
     <?php } ?>
     // $('#dteam').text(team);
-    var priority = $(this).attr('priority');    
+    var priority = $(this).attr('priority');
     if (priority == 1) {
       $('#dpriority').text('High');
     } else if (priority == 0) {
       $('#dpriority').text('Low');
-    } 
+    }
     var status = $(this).attr('status');
     if (status == 1) {
       $('#dstatus').text('On Progres');
     } else if (status == 2) {
-      $('#dstatus').text('Selesai');    
+      $('#dstatus').text('Selesai');
     } else if (status == 3) {
       $('#dstatus').text('Pending');
     }
@@ -424,7 +460,7 @@
     var tgl = $(this).attr('tgl');
     var bulan = $(this).attr('bulan');
     var tahun = $(this).attr('tahun');
-    $('#dtgl').text(tgl + '/' + bulan + '/' + tahun);    
+    $('#dtgl').text(tgl + '/' + bulan + '/' + tahun);
   });
   // End Modal Detail
 

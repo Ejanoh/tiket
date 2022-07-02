@@ -60,16 +60,19 @@
 <h3>Halaman <?= $title; ?></h3>
 
 <div class="col-12">
-  <div class="bg-light rounded h-100 p-4">    
+  <div class="bg-light rounded h-100 p-4">
     <?php if ($this->session->flashdata('pesan')) {
       echo '<div class="alert alert-success" role="alert">
                     Success ! ';
       echo $this->session->flashdata('pesan');
       echo '</div>';
     } ?>
-    <div class="text-align-right">
-      <button type="button" class="btn btn-primary rounded-pill m-2" id="add"><i class="fa fa-user-plus me-2"></i>Tambah Data</button>
-    </div>
+    <?php if (($this->session->userdata('role') == 2) || ($this->session->userdata('role') == 4)) { ?>
+      <div class="text-align-right">
+        <button type="button" class="btn btn-primary rounded-pill m-2" id="add"><i class="fa fa-user-plus me-2"></i>Tambah Data</button>
+      </div>
+    <?php } else {
+    } ?>
     <div class="table-responsive">
       <table id="pegawai" class="table">
         <thead>
@@ -78,8 +81,11 @@
             <th scope="col">Nama Lengkap</th>
             <th scope="col">Jenis Kelamin</th>
             <th scope="col">Divisi</th>
-            <th scope="col">Status</th>
-            <th scope="col">Action</th>
+            <?php if (($this->session->userdata('role') == 2) || ($this->session->userdata('role') == 4)) { ?>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            <?php } else {
+            } ?>
           </tr>
         </thead>
         <tbody>
@@ -110,16 +116,19 @@
                   Div. Website
                 <?php } ?>
               </td>
-              <td>
-                <?php if ($value->status == 1) { ?>
-                  <a type="button" href="<?= base_url('pegawai/nonaktif/') . $value->id ?>" class="btn btn-sm btn-primary rounded-pill m-2">Active</a>
-                <?php } else if ($value->status == 0) { ?>
-                  <a type="button" href="<?= base_url('pegawai/aktif/') . $value->id ?>" class="btn btn-sm btn-danger rounded-pill m-2">Non Aktive</a>
-                <?php } ?>
-              </td>
-              <td>
-                <button type="button" id="<?= $value->id; ?>" namal="<?= $value->namal; ?>" namap="<?= $value->namap; ?>" jk="<?= $value->jk; ?>" divisi="<?= $value->divisi; ?>" alamat="<?= $value->alamat; ?>" nohp="<?= $value->nohp; ?>" class="btn btn-sm btn-success rounded-pill m-2 editdata">Edit</button>
-              </td>
+              <?php if (($this->session->userdata('role') == 2) || ($this->session->userdata('role') == 4)) { ?>
+                <td>
+                  <?php if ($value->status == 1) { ?>
+                    <a type="button" href="<?= base_url('pegawai/nonaktif/') . $value->id ?>" class="btn btn-sm btn-primary rounded-pill m-2">Active</a>
+                  <?php } else if ($value->status == 0) { ?>
+                    <a type="button" href="<?= base_url('pegawai/aktif/') . $value->id ?>" class="btn btn-sm btn-danger rounded-pill m-2">Non Aktive</a>
+                  <?php } ?>
+                </td>
+                <td>
+                  <button type="button" id="<?= $value->id; ?>" namal="<?= $value->namal; ?>" namap="<?= $value->namap; ?>" jk="<?= $value->jk; ?>" divisi="<?= $value->divisi; ?>" alamat="<?= $value->alamat; ?>" nohp="<?= $value->nohp; ?>" class="btn btn-sm btn-success rounded-pill m-2 editdata">Edit</button>
+                </td>
+              <?php } else {
+              } ?>
             </tr>
           <?php } ?>
         </tbody>
@@ -141,13 +150,13 @@
         <div class="col-md-2">
           Nama Lengkap =>
         </div>
-        <div class="col-md-4">            
+        <div class="col-md-4">
           <h5 id="dnamal"></h5>
         </div>
         <div class="col-md-2 ">
           Nama Panggilan =>
         </div>
-        <div class="col-md-4">      
+        <div class="col-md-4">
           <h5 id="dnamap"></h5>
         </div>
       </div>
@@ -155,13 +164,13 @@
         <div class="col-md-2">
           Alamat =>
         </div>
-        <div class="col-md-4">            
+        <div class="col-md-4">
           <h5 id="dalamat"></h5>
         </div>
         <div class="col-md-2 ">
           Nomor HP =>
         </div>
-        <div class="col-md-4">      
+        <div class="col-md-4">
           <h5 id="dnohp"></h5>
         </div>
       </div>
@@ -169,13 +178,13 @@
         <div class="col-md-2">
           Jenis Kelamin =>
         </div>
-        <div class="col-md-4">            
+        <div class="col-md-4">
           <h5 id="djk"></h5>
         </div>
         <div class="col-md-2 ">
           Divisi =>
         </div>
-        <div class="col-md-4">      
+        <div class="col-md-4">
           <h5 id="ddivisi"></h5>
         </div>
       </div>
@@ -183,7 +192,7 @@
         <div class="col-md-2">
           Status =>
         </div>
-        <div class="col-md-4">            
+        <div class="col-md-4">
           <h5 id="dstatus"></h5>
         </div>
       </div>
@@ -327,19 +336,19 @@
     var divisi = $(this).attr('divisi');
     if (divisi == 1) {
       $('#ddivisi').text('Divisi Jaringan');
-    } else if (divisi == 2){
-      $('#ddivisi').text('Divisi Programmer');      
-    }    
+    } else if (divisi == 2) {
+      $('#ddivisi').text('Divisi Programmer');
+    }
     var jk = $(this).attr('jk');
     if (jk == 1) {
       $('#djk').text('Laki-Laki');
-    } else if (jk == 0){
+    } else if (jk == 0) {
       $('#djk').text('Perempuan');
     }
     var status = $(this).attr('status');
     if (status == 1) {
       $('#dstatus').text('Aktif');
-    } else if (status == 0){
+    } else if (status == 0) {
       $('#dstatus').text('Tidak Aktif');
     }
   });

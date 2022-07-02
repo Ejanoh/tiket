@@ -12,7 +12,7 @@
             <div class="nav-item dropdown">
                 <div href="#" class="nav-link">
                     <img class="rounded-circle me-lg-2" src="<?= base_url('assets') ?>/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                    <span class="d-none d-lg-inline-flex">Ejanoh</span>
+                    <span class="d-none d-lg-inline-flex">Holla <?= $this->session->userdata('user'); ?> | Selamat Datang Di Welcome</span>
                 </div>
             </div>
         </div>

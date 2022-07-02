@@ -1,67 +1,60 @@
             <!-- Sale & Revenue Start -->
-
-                <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-line fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
+            <div class="row g-4">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-pie fa-5x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total Pegawai</p>
+                            <h6 class="mb-0"><?= $pegawai; ?> Pegawai</h6>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-bar fa-5x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total Tiket</p>
+                            <h6 class="mb-0"><?= $tiket; ?> Tiket</h6>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-area fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>            
-            <!-- Sale & Revenue End -->
-
-
-            <!-- Sales Chart Start -->
-            <div class="pt-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Worldwide Sales</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <canvas id="worldwide-sales"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Salse & Revenue</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <canvas id="salse-revenue"></canvas>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-area fa-5x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total User Aktif</p>
+                            <h6 class="mb-0"><?= $user; ?> User</h6>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Sales Chart End -->
+            <div class="row g-4 mt-1 mb-2">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-pie fa-5x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total Pegawai</p>
+                            <h6 class="mb-0"><?= $pegawai; ?> Pegawai</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-bar fa-5x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total Tiket</p>
+                            <h6 class="mb-0"><?= $tiket; ?> Tiket</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-area fa-5x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total User Aktif</p>
+                            <h6 class="mb-0"><?= $user; ?> User</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sale & Revenue End -->

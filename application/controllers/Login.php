@@ -31,8 +31,6 @@ class Login extends CI_Controller
 				$data['user'] = $cek['username'];
 				$data['role'] = $cek['role'];
 				$this->session->set_userdata($data);
-				print_r($data);
-				die;
 				redirect('dashboard');
 			} else {
 				$this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Wrong password</div>');
@@ -46,5 +44,9 @@ class Login extends CI_Controller
 
 	public function logout()
 	{
+		$this->session->unset_userdata('user');
+        $this->session->unset_userdata('role');
+		$this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Berhasil Logout</div>');
+		redirect('login');
 	}
 }

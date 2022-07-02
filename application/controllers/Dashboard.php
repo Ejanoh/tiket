@@ -7,16 +7,17 @@ class Dashboard extends CI_Controller
 	{
 		parent::__construct();
 		is_logged_in();
+		// 	$this->load->model('M_admin');
 	}
-
-	// public function __construct() {
-	// 	parent::__construct();
-	// 	$this->load->model('M_admin');
-	// }
 
 	public function index()
 	{
-		$data = ['title' => 'Dashboard',];
+		$data = [
+			'title' => 'Dashboard',
+			'pegawai' => '3',
+			'tiket' => '11',
+			'user' => '4'
+		];
 		$this->load->view('layout/header', $data);
 		$this->load->view('layout/sidebar', $data);
 		$this->load->view('layout/navbar', $data);

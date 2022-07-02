@@ -28,14 +28,6 @@ class M_pegawai extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	// public function delete($id) {
-	// 	$sql = "DELETE FROM user WHERE iduser='" .$id ."'";
-
-	// 	$this->db->query($sql);
-
-	// 	return $this->db->affected_rows();
-	// }
-
 	public function nonaktif($id)
 	{
 		$sql = "UPDATE `pegawai` SET `status` = '0' WHERE `id` = '" .$id ."';";

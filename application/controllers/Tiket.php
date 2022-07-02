@@ -14,10 +14,28 @@ class Tiket extends CI_Controller
 
 	public function index()
 	{
+		$bln = date('m');
 		$data = [
 			'title' => 'Tiket',
-			'tiket' => $this->M_tiket->get(),
+			'tiket' => $this->M_tiket->get($bln),
 			'pegawai' => $this->M_pegawai->get(),
+			'bulan' => $bln,
+		];
+		// print_r($data['tiket']); die;
+		$this->load->view('layout/header', $data);
+		$this->load->view('layout/sidebar', $data);
+		$this->load->view('layout/navbar', $data);
+		$this->load->view('conten/tiket/index');
+		$this->load->view('layout/footer');
+	}
+
+	public function bulan($bln)
+	{
+		$data = [
+			'title' => 'Tiket',
+			'tiket' => $this->M_tiket->get($bln),
+			'pegawai' => $this->M_pegawai->get(),
+			'bulan' => '0'.$bln,
 		];
 		// print_r($data['tiket']); die;
 		$this->load->view('layout/header', $data);
